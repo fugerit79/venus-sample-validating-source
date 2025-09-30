@@ -1,6 +1,7 @@
 // generated from template 'DocHelperTest.ftl' on 2025-09-30T15:48:18.539+02:00
 package test.org.fugerit.java.demo.venussamplevalidatingsource;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.demo.venussamplevalidatingsource.DocHelper;
 import org.fugerit.java.demo.venussamplevalidatingsource.People;
 
@@ -34,26 +35,36 @@ import lombok.AllArgsConstructor;
 @Slf4j
 class DocHelperTest {
 
-    @Test
-    void testDocProcess() {
+    private int testDocProcessWorker( boolean createFailCondition) throws Exception {
         try ( ByteArrayOutputStream baos = new ByteArrayOutputStream() ) {
             // creates the doc helper
             DocHelper docHelper = new DocHelper();
             // create custom data for the fremarker template 'document.ftl'
             List<People> listPeople = Arrays.asList( new People( "Luthien", "Tinuviel", "Queen" ), new People( "Thorin", "Oakshield", "King" ) );
-            
-            
             String chainId = "document";
             // handler id
-            String handlerId = DocConfig.TYPE_MD;
+            String handlerId = DocConfig.TYPE_XML;
             // output generation
-            docHelper.getDocProcessConfig().fullProcess( chainId, DocProcessContext.newContext( "listPeople", listPeople ), handlerId, baos );
+            docHelper.getDocProcessConfig().fullProcess( chainId,
+                    DocProcessContext.newContext( "listPeople", listPeople )
+                            .withAtt( "createFailCondition",  createFailCondition),
+                    handlerId, baos );
             // print the output
             log.info( "html output : \n{}", new String( baos.toByteArray(), StandardCharsets.UTF_8 ) );
-            Assertions.assertNotEquals( 0, baos.size() );
-        } catch (Exception e) {
-            log.error( String.format( "Error : %s", e.toString() ), e );
+            return baos.size();
         }
+    }
+
+    @Test
+    void testDocProcessValidationOk() throws Exception {
+        // generate a document with no errors
+        Assertions.assertNotEquals( 0, this.testDocProcessWorker( Boolean.FALSE ) );
+    }
+
+    @Test
+    void testDocProcessValidationFail() throws Exception {
+        // generate a document with validation error and fail
+        Assertions.assertThrows(ConfigRuntimeException.class, () -> this.testDocProcessWorker( Boolean.TRUE ) );
     }
 
 }

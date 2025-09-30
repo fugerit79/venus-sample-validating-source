@@ -36,6 +36,7 @@
     </metadata>
     <body>
     <para>${docTitle!defaultTitle}</para>
+
     <table columns="3" colwidths="30;30;40"  width="100" id="data-table" padding="2">
         <row header="true">
             <cell align="center"><para>Name</para></cell>
@@ -45,6 +46,8 @@
         <#if listPeople??>
             <#list listPeople as current>
                 <row>
+                    <#-- if createFailCondition is set to true, it will add a element not allowed in this position by the xsd -->
+                    <#if createFailCondition!false><para>This element is not allowed this</para></#if>
                     <cell><para>${current.name}</para></cell>
                     <cell><para>${current.surname}</para></cell>
                     <cell><para>${current.title}</para></cell>

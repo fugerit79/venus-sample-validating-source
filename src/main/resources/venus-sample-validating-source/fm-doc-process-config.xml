@@ -3,7 +3,9 @@
 <freemarker-doc-process-config
         xmlns="https://freemarkerdocprocess.fugerit.org"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://freemarkerdocprocess.fugerit.org https://www.fugerit.org/data/java/doc/xsd/freemarker-doc-process-1-0.xsd" >
+        xsi:schemaLocation="https://freemarkerdocprocess.fugerit.org https://www.fugerit.org/data/java/doc/xsd/freemarker-doc-process-1-0.xsd"
+        validating="true"
+        failOnValidate="true">
 
     <!--
     Documentation :
