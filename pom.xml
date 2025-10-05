@@ -4,11 +4,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.fugerit.java.demo</groupId>
   <artifactId>venus-sample-validating-source</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <fj-doc-version>8.16.5</fj-doc-version>
+    <jacoco-plugin-version>0.8.13</jacoco-plugin-version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -68,6 +69,25 @@
           </execution>
         </executions>
       </plugin>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-plugin-version}</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
 </project>

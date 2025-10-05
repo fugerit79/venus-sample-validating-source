@@ -62,7 +62,7 @@ class DocHelperTest {
     }
 
     @Test
-    void testDocProcessValidationFail() throws Exception {
+    void testDocProcessValidationFail() {
         // generate a document with validation error and fail
         Assertions.assertThrows(ConfigRuntimeException.class, () -> this.testDocProcessWorker( Boolean.TRUE ) );
     }
